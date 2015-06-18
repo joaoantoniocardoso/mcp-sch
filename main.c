@@ -1,77 +1,60 @@
 /*
  * main.c
+ *
+ *
  */
-extern void delay(int milli);
-extern void init_gpio();
-extern void led_on();
-extern void led_off();
-extern long long mult(long a, long b);
+#include "system.h"
+#include "interrupts.h"
+#include "gpio.h"
 
-int turn = 1;
-void SysTick_INT(void){
+
+#define MS_DELAY 1000
+
+int soma(int a, int b){
+	int res;
+	int res2;
+	__asm__("add %0, %2, %3	\n"
+			"add r4, %0, %0 \n"
+			"add %2, r4, r4 \n"
+			: "=r"(res), "=r"(res2)
+			: "r"(a), "r"(b)
+			: "r4"
+		   );
+	return res;
+}
+
+int turn = 0;
+void PortF_INT(){
+	delay(1000 );
+	nvic_clearPending(PORTF_IRQ);
+	gpio_clearInt(PORT_F, 1);
 	if(turn){
-		led_on();
+		gpio_clearPin(PORT_F, 0);
 		turn = 0;
 	} else {
-		led_off();
+		gpio_setPin(PORT_F, 0);
 		turn = 1;
 	}
 }
 
-typedef struct SysTick {
-	unsigned int ctrl_stat;
-	unsigned int reload;
-	unsigned int current;
-	unsigned int calibration;
-} tSysTick;
-
-tSysTick * st_regs;
-
-#define MS_DELAY 1000
-
 int main(void) {
+	gpio_enable(PORT_F);
+	gpio_setPinOutput(PORT_F, 0);
+	gpio_enableDigital(PORT_F, 0);
 
-	init_gpio();
-	st_regs = (tSysTick *)(0xE000E010);
-	st_regs->ctrl_stat = 0;
-	st_regs->reload = 8000000;
-	st_regs->current = 0;
-	st_regs->ctrl_stat = 0x07;
+	gpio_setPinInput(PORT_F, 1);
+	gpio_setPullUp(PORT_F, 1, 1);
+	gpio_setIntSense(PORT_F, 1, SENSE_EDGE);
+	gpio_setIntEvent(PORT_F, 1, FALLING_EDGE);
+	gpio_enableInt(PORT_F, 1);
+	gpio_enableDigital(PORT_F, 1);
+
+	nvic_enable(PORTF_IRQ);
 
 	while(1){
-
+		//gpio_setPin(PORT_F, 0);
+		//delay(MS_DELAY);
+		//gpio_clearPin(PORT_F, 0);
+		//delay(MS_DELAY);
 	}
-	/*
-	long long res;
-	long a = 4;
-	long b = 1000000000;
-	res = mult(a,b);
-
-	init_gpio();
-	while(1){
-		led_on();
-		delay(MS_DELAY);
-		led_off();
-		delay(MS_DELAY);
-	}
-
-	return (int)res;
-	*/
-}
-
-
-int hm_01(int a){
-	return a+10;
-}
-
-int hm_02(int a, int b){
-	return a + b;
-}
-
-long long hm_03(long a, long b){
-	return a*b;
-}
-
-long long hm_04(long a, long b){
-	return (long long)a*(long long)b;
 }

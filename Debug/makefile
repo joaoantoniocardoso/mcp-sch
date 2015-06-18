@@ -7,9 +7,11 @@ SHELL = cmd.exe
 CG_TOOL_ROOT := C:/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3
 
 ORDERED_OBJS += \
-"./libasm.o" \
+"./gpio.o" \
+"./interrupts.o" \
 "./lm3s6965_startup_ccs_gcc.o" \
 "./main.o" \
+"./system.o" \
 -Wl,-T"../lm3s6965.lds" \
 $(GEN_CMDS__FLAG) \
 -Wl,--start-group \
@@ -139,7 +141,7 @@ all: mcp-sch.out
 mcp-sch.out: $(OBJS) $(LDS_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GNU Linker'
-	"C:/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3/bin/arm-none-eabi-gcc.exe" -mthumb -DPART_LM3S6965 -ffunction-sections -fdata-sections -g -gdwarf-3 -gstrict-dwarf -Wall -Wl,-Map,"mcp-sch.map" -o"mcp-sch.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3/bin/arm-none-eabi-gcc.exe" -mthumb -DPART_LM3S6965 -ffunction-sections -fdata-sections -g -gdwarf-3 -gstrict-dwarf -Wall -Wl,-Map,"mcp-sch.map" -static -o"mcp-sch.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -152,9 +154,8 @@ mcp-sch.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "lm3s6965_startup_ccs_gcc.d" "main.d" 
-	-$(RM) "libasm.d" 
-	-$(RM) "libasm.o" "lm3s6965_startup_ccs_gcc.o" "main.o" 
+	-$(RM) "gpio.d" "interrupts.d" "lm3s6965_startup_ccs_gcc.d" "main.d" "system.d" 
+	-$(RM) "gpio.o" "interrupts.o" "lm3s6965_startup_ccs_gcc.o" "main.o" "system.o" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

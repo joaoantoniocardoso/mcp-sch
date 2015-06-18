@@ -1,1 +1,1 @@
-"./libasm.o" "./lm3s6965_startup_ccs_gcc.o" "./main.o" -Wl,-T"../lm3s6965.lds" -Wl,--start-group -l"c" -l"gcc" -l"nosys" -Wl,--end-group 
+"./gpio.o" "./interrupts.o" "./lm3s6965_startup_ccs_gcc.o" "./main.o" "./system.o" -Wl,-T"../lm3s6965.lds" -Wl,--start-group -l"c" -l"gcc" -l"nosys" -Wl,--end-group 

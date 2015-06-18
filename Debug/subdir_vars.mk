@@ -7,41 +7,45 @@ LDS_SRCS += \
 ../lm3s6965.lds 
 
 C_SRCS += \
+../gpio.c \
+../interrupts.c \
 ../lm3s6965_startup_ccs_gcc.c \
-../main.c 
-
-S_SRCS += \
-../libasm.s 
+../main.c \
+../system.c 
 
 OBJS += \
-./libasm.o \
+./gpio.o \
+./interrupts.o \
 ./lm3s6965_startup_ccs_gcc.o \
-./main.o 
-
-S_DEPS += \
-./libasm.d 
+./main.o \
+./system.o 
 
 C_DEPS += \
+./gpio.d \
+./interrupts.d \
 ./lm3s6965_startup_ccs_gcc.d \
-./main.d 
+./main.d \
+./system.d 
 
 C_DEPS__QUOTED += \
+"gpio.d" \
+"interrupts.d" \
 "lm3s6965_startup_ccs_gcc.d" \
-"main.d" 
-
-S_DEPS__QUOTED += \
-"libasm.d" 
+"main.d" \
+"system.d" 
 
 OBJS__QUOTED += \
-"libasm.o" \
+"gpio.o" \
+"interrupts.o" \
 "lm3s6965_startup_ccs_gcc.o" \
-"main.o" 
-
-S_SRCS__QUOTED += \
-"../libasm.s" 
+"main.o" \
+"system.o" 
 
 C_SRCS__QUOTED += \
+"../gpio.c" \
+"../interrupts.c" \
 "../lm3s6965_startup_ccs_gcc.c" \
-"../main.c" 
+"../main.c" \
+"../system.c" 
 
 

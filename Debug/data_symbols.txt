@@ -1,0 +1,12 @@
+00000c00 l    d  .rodata	00000000 .rodata
+20000000 l    d  .data	00000000 .data
+20000040 l     O .data	00000428 impure_data
+20000000 g       .data	00000000 __data_start__
+20000000 g     O .data	00000000 .hidden __dso_handle
+00000c04 g     O .rodata	00000004 _global_impure_ptr
+2000046c g       .data	00000000 __data_end__
+00000c0c g       *ABS*	00000000 __data_load__
+20000004 g     O .data	0000001c gpio_regs
+20000468 g     O .data	00000004 _impure_ptr
+2000003c g     O .data	00000004 hugo
+20000020 g     O .data	0000001c gpio_padctrl

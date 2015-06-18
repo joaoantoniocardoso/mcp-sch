@@ -35,6 +35,14 @@ static void FaultISR(void);
 static void IntDefaultHandler(void);
 
 void SysTick_INT(void) __attribute__((weak, alias("IntDefaultHandler")));
+void PortA_INT(void) __attribute__((weak, alias("IntDefaultHandler")));
+void PortB_INT(void) __attribute__((weak, alias("IntDefaultHandler")));
+void PortC_INT(void) __attribute__((weak, alias("IntDefaultHandler")));
+void PortD_INT(void) __attribute__((weak, alias("IntDefaultHandler")));
+void PortE_INT(void) __attribute__((weak, alias("IntDefaultHandler")));
+void PortF_INT(void) __attribute__((weak, alias("IntDefaultHandler")));
+void PortG_INT(void) __attribute__((weak, alias("IntDefaultHandler")));
+void PortH_INT(void) __attribute__((weak, alias("IntDefaultHandler")));
 
 //*****************************************************************************
 //
@@ -84,11 +92,11 @@ void (* const g_pfnVectors[])(void) =
     0,                                      // Reserved
     IntDefaultHandler,                      // The PendSV handler
 	SysTick_INT,   		                    // The SysTick handler
-    IntDefaultHandler,                      // GPIO Port A
-    IntDefaultHandler,                      // GPIO Port B
-    IntDefaultHandler,                      // GPIO Port C
-    IntDefaultHandler,                      // GPIO Port D
-    IntDefaultHandler,                      // GPIO Port E
+	PortA_INT,         		                // GPIO Port A
+	PortB_INT,                      		// GPIO Port B
+	PortC_INT,                      		// GPIO Port C
+	PortD_INT,                      		// GPIO Port D
+	PortE_INT,                      		// GPIO Port E
     IntDefaultHandler,                      // UART0 Rx and Tx
     IntDefaultHandler,                      // UART1 Rx and Tx
     IntDefaultHandler,                      // SSI0 Rx and Tx
@@ -114,9 +122,9 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // Analog Comparator 2
     IntDefaultHandler,                      // System Control (PLL, OSC, BO)
     IntDefaultHandler,                      // FLASH Control
-    IntDefaultHandler,                      // GPIO Port F
-    IntDefaultHandler,                      // GPIO Port G
-    IntDefaultHandler,                      // GPIO Port H
+	PortF_INT,                      		// GPIO Port F
+	PortG_INT,                      		// GPIO Port G
+	PortH_INT,                      		// GPIO Port H
     IntDefaultHandler,                      // UART2 Rx and Tx
     IntDefaultHandler,                      // SSI1 Rx and Tx
     IntDefaultHandler,                      // Timer 3 subtimer A
@@ -161,7 +169,7 @@ ResetISR(void)
     //
     // Copy the data segment initializers from flash to SRAM.
     //
-    pui32Src = &__etext;
+    pui32Src = &__etext+3;
     for(pui32Dest = &__data_start__; pui32Dest < &__data_end__; )
     {
         *pui32Dest++ = *pui32Src++;

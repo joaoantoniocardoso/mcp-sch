@@ -333,10 +333,10 @@ OUTPUT(LibASM.out elf32-littlearm)
  .debug_line    0x00000081      0x14e ./lm3s6965_startup_ccs_gcc.o
  .debug_line    0x000001cf       0x9d ./main.o
 
-.debug_info     0x00000000      0x364
- .debug_info    0x00000000       0x52 ./libasm.o
- .debug_info    0x00000052      0x170 ./lm3s6965_startup_ccs_gcc.o
- .debug_info    0x000001c2      0x1a2 ./main.o
+.debug_info     0x00000000      0x374
+ .debug_info    0x00000000       0x62 ./libasm.o
+ .debug_info    0x00000062      0x170 ./lm3s6965_startup_ccs_gcc.o
+ .debug_info    0x000001d2      0x1a2 ./main.o
 
 .debug_abbrev   0x00000000      0x192
  .debug_abbrev  0x00000000       0x14 ./libasm.o
@@ -355,11 +355,11 @@ OUTPUT(LibASM.out elf32-littlearm)
  .debug_ranges  0x00000000       0x28 ./lm3s6965_startup_ccs_gcc.o
  .debug_ranges  0x00000028       0x38 ./main.o
 
-.debug_str      0x00000000      0x246
- .debug_str     0x00000000      0x1d8 ./lm3s6965_startup_ccs_gcc.o
-                                0x215 (size before relaxing)
- .debug_str     0x000001d8       0x6e ./main.o
-                                0x177 (size before relaxing)
+.debug_str      0x00000000      0x256
+ .debug_str     0x00000000      0x1e8 ./lm3s6965_startup_ccs_gcc.o
+                                0x225 (size before relaxing)
+ .debug_str     0x000001e8       0x6e ./main.o
+                                0x187 (size before relaxing)
 
 .debug_frame    0x00000000      0x274
  .debug_frame   0x00000000       0x58 ./lm3s6965_startup_ccs_gcc.o
