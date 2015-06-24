@@ -1,13 +1,23 @@
 #include task.h
 
+uint8 num_tasks = 0;
+
 uint32 	task_init(void){
 	//configuracao 
+	task_create(main, )
 }
 
 uint32 	task_create(void(*entry)(void*), void *args){
 	//cria a tarefa e retorna o tid
-
-
+	task_t *n_task;
+	*n_task = (task_t*) malloc(sizeof(task_t));
+	n_task->task_ctx = malloc(TASK_STACK_SIZE);
+	n_task->task_ctx += TASK_STACK_SIZE-14*sizeof(uint32);//Aponta para o inicio da pilha mais o numero de registradores sem PC
+	*n_task = entry;//salva entry no registrador LR da pilha
+	n_task->status = 0;//ready
+	num_tasks++;
+	n_task->tid = num_tasks;
+	return n_task->tid;
 }
 
 void	task_suspend(){

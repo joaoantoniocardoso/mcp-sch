@@ -9,9 +9,11 @@
 
 typedef struct task task_t; // 'process control block'
 struct task {
+	uint32* adr_process;
 	uint32 tid;
 	uint8 status; // [0]ready, [1]running;
 	uint32 * task_stack; //= (uint32*) malloc(TASK_STACK_SIZE); // 1024 palavras para stack + registradores
+	void *ctx;
 	//uint32 tid_next;
 };
 // tid uint32 ou como char?
