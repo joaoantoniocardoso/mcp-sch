@@ -4,6 +4,7 @@
 extern int main(void);
 uint8 num_tasks = 0;
 task_t * running;
+uint32 task_list[10];
 
 //configuracao
 void task_init(void){
@@ -19,14 +20,17 @@ uint32 	task_create(void(*entry)(void*), void *args){
 	n_task = (task_t*) malloc(sizeof(task_t));
 	n_task->task_ctx =  malloc(TASK_STACK_SIZE) + TASK_STACK_SIZE;
 	//n_task->task_ctx += TASK_STACK_SIZE;//Aponta para o inicio da pilha
-	n_task->task_ctx = args;//salva o endereço dos argumentos no r0
+	n_task->task_ctx = args; //salva o endereco dos argumentos no r0
 	//n_task->task_ctx +=
-	n_task->task_ctx -=13*sizeof(uint32);//Aponta para o inicio da pilha mais o numero de registradores sem PC e SP
-	*(n_task->task_ctx) = entry;//salva entry no registrador LR da pilha
-	n_task->status = 0;//ready
+	n_task->task_ctx -=13*sizeof(uint32); //Aponta para o inicio da pilha mais o numero de registradores sem PC e SP
+	*((uint32*)n_task->task_ctx) = (uint32)entry; //salva entry no registrador LR da pilha
+
+	n_task->status = 0; //ready
 	n_task->tid = num_tasks;
-	(busca(num_tasks-1))->t_next = n_task;
-	n_task->t_next = Sch_pointer;
+
+	n_task->t_next = running->t_next;
+	running->t_next = n_task;
+
 	num_tasks++;
 	return n_task->tid;
 }
@@ -72,20 +76,20 @@ void	task_pass(uint32 tid){
 }*/
 
 uint32 task_id(void){
-	return running->task_id;
+	return running->tid;
 }
 
-//busca uma task na lista
-task_t* busca (uint32 id) {
-	task_t *t = Sch_pointer;
-	uint8 i;
-	for (i=num_tasks; i>0; i--){
-		if (t->tid ==id)
-			return t;
-		t=t->t_next;
-	}
-	return NULL; // não achou o elemento
-}
+////busca uma task na lista
+//task_t* busca (uint32 id) {
+//	task_t *t = running;
+//	uint8 i;
+//	for (i=num_tasks; i>0; i--){
+//		if (t->tid ==id)
+//			return t;
+//		t=t->t_next;
+//	}
+//	return NULL; // não achou o elemento
+//}
 
 // Internal Functions
 void 	reschedule(void){

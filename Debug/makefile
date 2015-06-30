@@ -2,7 +2,9 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-CG_TOOL_ROOT := /home/marcio/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3
+SHELL = cmd.exe
+
+CG_TOOL_ROOT := C:/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3
 
 ORDERED_OBJS += \
 "./gpio.o" \
@@ -21,8 +23,8 @@ $(GEN_CMDS__FLAG) \
 
 -include ../makefile.init
 
-RM := rm -rf
-RMDIR := rm -rf
+RM := DEL /F
+RMDIR := RMDIR /S/Q
 
 # All of the sources participating in the build are defined here
 -include sources.mk
@@ -121,32 +123,32 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-MCP22105_Final.out \
+mcp-sch.out \
 
 EXE_OUTPUTS__QUOTED += \
-"MCP22105_Final.out" \
+"mcp-sch.out" \
 
 BIN_OUTPUTS += \
-MCP22105_Final.hex \
+mcp-sch.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"MCP22105_Final.hex" \
+"mcp-sch.hex" \
 
 
 # All Target
-all: MCP22105_Final.out
+all: mcp-sch.out
 
 # Tool invocations
-MCP22105_Final.out: $(OBJS) $(LDS_SRCS) $(GEN_CMDS)
+mcp-sch.out: $(OBJS) $(LDS_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GNU Linker'
-	"/home/marcio/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3/bin/arm-none-eabi-gcc" -mthumb -DPART_LM3S6965 -ffunction-sections -fdata-sections -g -gdwarf-3 -gstrict-dwarf -Wall -Wl,-Map,"MCP22105_Final.map" -static -o"MCP22105_Final.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3/bin/arm-none-eabi-gcc.exe" -mthumb -DPART_LM3S6965 -ffunction-sections -fdata-sections -g -gdwarf-3 -gstrict-dwarf -Wall -Wl,-Map,"mcp-sch.map" -static -o"mcp-sch.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-MCP22105_Final.hex: $(EXE_OUTPUTS)
+mcp-sch.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: GNU Objcopy Utility'
-	"/home/marcio/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3/bin/arm-none-eabi-objcopy"  $(EXE_OUTPUTS__QUOTED) "MCP22105_Final.hex"
+	"C:/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3/bin/arm-none-eabi-objcopy.exe"  $(EXE_OUTPUTS__QUOTED) "mcp-sch.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 

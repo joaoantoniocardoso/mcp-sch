@@ -13,42 +13,41 @@
 
  uint32 t_ledoff, t_ledon;
 
-int soma(int a, int b){
-	int res;
-	int res2;
-	__asm__("add %0, %2, %3	\n"
-			"add r4, %0, %0 \n"
-			"add %2, r4, r4 \n"
-			: "=r"(res), "=r"(res2)
-			: "r"(a), "r"(b)
-			: "r4"
-		   );
-	return res;
-}
+//int soma(int a, int b){
+//	int res;
+//	int res2;
+//	__asm__("add %0, %2, %3	\n"
+//			"add r4, %0, %0 \n"
+//			"add %2, r4, r4 \n"
+//			: "=r"(res), "=r"(res2)
+//			: "r"(a), "r"(b)
+//			: "r4"
+//		   );
+//	return res;
+//}
 
-void task_soma(void){
-	while(1){
-		//pegar os parametros e passar para variaveis locais variavel1 e variavel2
-		uint32 *i;
-		int var1, var2;
-		__asm__(
-				"ldr r4,[sp]\n"
-				"add sp,0x04\n"
-				"ldr %0, [r4,0x00] \n"
-				"ldr %1, [r4,0x04] \n"
-				: "r4"
-				: "=r"(var1),"=r"(var2)
-				);
+//void task_soma(void){
+//	while(1){
+//		//pegar os parametros e passar para variaveis locais variavel1 e variavel2
+//		//uint32 *i;
+//		int var1, var2;
+//		__asm__("ldr r4,[sp,0]		\n"
+//				"add sp,0x04		\n"
+//				"ldr %0, [r4,0x00]	\n"
+//				"ldr %1, [r4,0x04] 	\n"
+////				: "r4"
+//				: "=r"(var1), "=r"(var2)
+//				);
+//
+//		int essa_somas = soma(var1, var2);
+//	//	task_join
+//	// buscar proxima task ready
+//	//task_pass();
+//	}
 
-		int essa_somas = soma(var1, var2);
-	//	task_join
-	// buscar proxima task ready
-	//task_pass();
-	}
+//}
 
-}
-
-void task_ledon(void){
+void task_ledon(void * args){
 	while(1){
 		gpio_setPin(PORT_F, 0);
 		delay(500);
@@ -56,7 +55,7 @@ void task_ledon(void){
 	}
 }
 
-void task_ledoff(void){
+void task_ledoff(void * args){
 	while(1){
 		gpio_clearPin(PORT_F, 0);
 		delay(500);
@@ -99,9 +98,9 @@ int main(void) {
 
 	task_init();
 
-	t_ledon = task_create(task_ledon,0);
-	t_ledoff = task_create(task_ledoff,0);
-	task_pass(t_ledon);
+	tid_ledon = task_create(task_ledon,0);
+	tid_ledoff = task_create(task_ledoff,0);
+	task_pass(tid_ledon);
 	
 	//uint32 soma1 = task_create(task_soma,i);
 	//uint32 soma2 = task_create(task_soma,0);

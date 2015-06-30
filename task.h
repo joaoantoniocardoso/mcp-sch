@@ -18,7 +18,7 @@ struct task {
 // tid uint32 ou como char?
 task_t tasks[MAX_TASKS];
 
-uint32 	task_init(void);									// configuracao
+void 	task_init(void);									// configuracao
 uint32 	task_create(void(*entry)(void*), void *args);		// cria a tarefa e retorna o tid
 void	task_suspend(); 									// suspende a propria tarefa que chama
 void	task_resume(uint32 tid);
