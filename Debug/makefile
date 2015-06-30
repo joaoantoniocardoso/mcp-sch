@@ -2,9 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-SHELL = cmd.exe
-
-CG_TOOL_ROOT := C:/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3
+CG_TOOL_ROOT := /home/marcio/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3
 
 ORDERED_OBJS += \
 "./gpio.o" \
@@ -12,6 +10,7 @@ ORDERED_OBJS += \
 "./lm3s6965_startup_ccs_gcc.o" \
 "./main.o" \
 "./system.o" \
+"./task.o" \
 -Wl,-T"../lm3s6965.lds" \
 $(GEN_CMDS__FLAG) \
 -Wl,--start-group \
@@ -22,8 +21,8 @@ $(GEN_CMDS__FLAG) \
 
 -include ../makefile.init
 
-RM := DEL /F
-RMDIR := RMDIR /S/Q
+RM := rm -rf
+RMDIR := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
@@ -122,40 +121,40 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-mcp-sch.out \
+MCP22105_Final.out \
 
 EXE_OUTPUTS__QUOTED += \
-"mcp-sch.out" \
+"MCP22105_Final.out" \
 
 BIN_OUTPUTS += \
-mcp-sch.hex \
+MCP22105_Final.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"mcp-sch.hex" \
+"MCP22105_Final.hex" \
 
 
 # All Target
-all: mcp-sch.out
+all: MCP22105_Final.out
 
 # Tool invocations
-mcp-sch.out: $(OBJS) $(LDS_SRCS) $(GEN_CMDS)
+MCP22105_Final.out: $(OBJS) $(LDS_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GNU Linker'
-	"C:/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3/bin/arm-none-eabi-gcc.exe" -mthumb -DPART_LM3S6965 -ffunction-sections -fdata-sections -g -gdwarf-3 -gstrict-dwarf -Wall -Wl,-Map,"mcp-sch.map" -static -o"mcp-sch.out" $(ORDERED_OBJS)
+	"/home/marcio/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3/bin/arm-none-eabi-gcc" -mthumb -DPART_LM3S6965 -ffunction-sections -fdata-sections -g -gdwarf-3 -gstrict-dwarf -Wall -Wl,-Map,"MCP22105_Final.map" -static -o"MCP22105_Final.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-mcp-sch.hex: $(EXE_OUTPUTS)
+MCP22105_Final.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: GNU Objcopy Utility'
-	"C:/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3/bin/arm-none-eabi-objcopy.exe"  $(EXE_OUTPUTS__QUOTED) "mcp-sch.hex"
+	"/home/marcio/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3/bin/arm-none-eabi-objcopy"  $(EXE_OUTPUTS__QUOTED) "MCP22105_Final.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "gpio.d" "interrupts.d" "lm3s6965_startup_ccs_gcc.d" "main.d" "system.d" 
-	-$(RM) "gpio.o" "interrupts.o" "lm3s6965_startup_ccs_gcc.o" "main.o" "system.o" 
+	-$(RM) "gpio.d" "interrupts.d" "lm3s6965_startup_ccs_gcc.d" "main.d" "system.d" "task.d" 
+	-$(RM) "gpio.o" "interrupts.o" "lm3s6965_startup_ccs_gcc.o" "main.o" "system.o" "task.o" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

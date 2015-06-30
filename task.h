@@ -9,12 +9,11 @@
 
 typedef struct task task_t; // 'process control block'
 struct task {
-	uint32* adr_process;
 	uint32 tid;
 	uint8 status; // [0]ready, [1]running;
-	uint32 * task_stack; //= (uint32*) malloc(TASK_STACK_SIZE); // 1024 palavras para stack + registradores
-	void *ctx;
-	//uint32 tid_next;
+	//uint32 * task_stack; //1024 palavras para stack + registradores
+	void *task_ctx;
+	task_t *t_next;
 };
 // tid uint32 ou como char?
 task_t tasks[MAX_TASKS];
@@ -33,6 +32,7 @@ uint32 	task_id(void); 										// retorna o tid da tarefa atual
 void 	reschedule(void);
 void 	pauseScheduler(void);
 void 	resumeScheduler(void);
-void    switch_context(**uint32 o_ctx, *uint32 n_ctx);
+//void    switch_context(**uint32 o_ctx, *uint32 n_ctx);
+task_t* busca (uint32 id);
 
 #endif

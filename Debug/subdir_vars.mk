@@ -11,41 +11,47 @@ C_SRCS += \
 ../interrupts.c \
 ../lm3s6965_startup_ccs_gcc.c \
 ../main.c \
-../system.c 
+../system.c \
+../task.c 
 
 OBJS += \
 ./gpio.o \
 ./interrupts.o \
 ./lm3s6965_startup_ccs_gcc.o \
 ./main.o \
-./system.o 
+./system.o \
+./task.o 
 
 C_DEPS += \
 ./gpio.d \
 ./interrupts.d \
 ./lm3s6965_startup_ccs_gcc.d \
 ./main.d \
-./system.d 
+./system.d \
+./task.d 
 
 C_DEPS__QUOTED += \
 "gpio.d" \
 "interrupts.d" \
 "lm3s6965_startup_ccs_gcc.d" \
 "main.d" \
-"system.d" 
+"system.d" \
+"task.d" 
 
 OBJS__QUOTED += \
 "gpio.o" \
 "interrupts.o" \
 "lm3s6965_startup_ccs_gcc.o" \
 "main.o" \
-"system.o" 
+"system.o" \
+"task.o" 
 
 C_SRCS__QUOTED += \
 "../gpio.c" \
 "../interrupts.c" \
 "../lm3s6965_startup_ccs_gcc.c" \
 "../main.c" \
-"../system.c" 
+"../system.c" \
+"../task.c" 
 
 

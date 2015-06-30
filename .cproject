@@ -37,7 +37,6 @@
 									<listOptionValue builtIn="false" value="-MD"/>
 									<listOptionValue builtIn="false" value="-fomit-frame-pointer"/>
 									<listOptionValue builtIn="false" value="-std=c99"/>
-									<listOptionValue builtIn="false" value="-pedantic"/>
 									<listOptionValue builtIn="false" value="-c"/>
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_4.0.compilerID.DEFINE.2110151027" name="Define symbols (-D)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_4.0.compilerID.DEFINE" valueType="definedSymbols">

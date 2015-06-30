@@ -6,9 +6,12 @@
 #include "system.h"
 #include "interrupts.h"
 #include "gpio.h"
+#include "task.h"
 
 
 #define MS_DELAY 1000
+
+ uint32 t_ledoff, t_ledon;
 
 int soma(int a, int b){
 	int res;
@@ -24,9 +27,41 @@ int soma(int a, int b){
 }
 
 void task_soma(void){
-	//pegar os parametros e passar para variaveis locais variavel1 e variavel2
-	int soma(variavel1, variavel2);
+	while(1){
+		//pegar os parametros e passar para variaveis locais variavel1 e variavel2
+		uint32 *i;
+		int var1, var2;
+		__asm__(
+				"ldr r4,[sp]\n"
+				"add sp,0x04\n"
+				"ldr %0, [r4,0x00] \n"
+				"ldr %1, [r4,0x04] \n"
+				: "r4"
+				: "=r"(var1),"=r"(var2)
+				);
 
+		int essa_somas = soma(var1, var2);
+	//	task_join
+	// buscar proxima task ready
+	//task_pass();
+	}
+
+}
+
+void task_ledon(void){
+	while(1){
+		gpio_setPin(PORT_F, 0);
+		delay(500);
+		task_pass(t_ledoff);
+	}
+}
+
+void task_ledoff(void){
+	while(1){
+		gpio_clearPin(PORT_F, 0);
+		delay(500);
+		task_pass(t_ledon);
+	}
 }
 
 int turn = 0;
@@ -57,8 +92,20 @@ int main(void) {
 
 	nvic_enable(PORTF_IRQ);
 
-	task_create(task_soma,/*struct*/);
+	//
+	//int i[2];
+	//i[0] = 3;
+	//i[1]= 5;
+
 	task_init();
+
+	t_ledon = task_create(task_ledon,0);
+	t_ledoff = task_create(task_ledoff,0);
+	task_pass(t_ledon);
+	
+	//uint32 soma1 = task_create(task_soma,i);
+	//uint32 soma2 = task_create(task_soma,0);
+	//task_pass(soma1);
 
 	while(1){
 		//gpio_setPin(PORT_F, 0);
