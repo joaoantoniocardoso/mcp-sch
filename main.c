@@ -11,7 +11,7 @@
 
 #define MS_DELAY 1000
 
- uint32 t_ledoff, t_ledon;
+ uint32 tid_ledoff, tid_ledon;
 
 //int soma(int a, int b){
 //	int res;
@@ -51,7 +51,7 @@ void task_ledon(void * args){
 	while(1){
 		gpio_setPin(PORT_F, 0);
 		delay(500);
-		task_pass(t_ledoff);
+		task_pass(tid_ledoff);
 	}
 }
 
@@ -59,7 +59,7 @@ void task_ledoff(void * args){
 	while(1){
 		gpio_clearPin(PORT_F, 0);
 		delay(500);
-		task_pass(t_ledon);
+		task_pass(tid_ledon);
 	}
 }
 
@@ -82,14 +82,14 @@ int main(void) {
 	gpio_setPinOutput(PORT_F, 0);
 	gpio_enableDigital(PORT_F, 0);
 
-	gpio_setPinInput(PORT_F, 1);
-	gpio_setPullUp(PORT_F, 1, 1);
-	gpio_setIntSense(PORT_F, 1, SENSE_EDGE);
-	gpio_setIntEvent(PORT_F, 1, FALLING_EDGE);
-	gpio_enableInt(PORT_F, 1);
-	gpio_enableDigital(PORT_F, 1);
+//	gpio_setPinInput(PORT_F, 1);
+//	gpio_setPullUp(PORT_F, 1, 1);
+//	gpio_setIntSense(PORT_F, 1, SENSE_EDGE);
+//	gpio_setIntEvent(PORT_F, 1, FALLING_EDGE);
+//	gpio_enableInt(PORT_F, 1);
+//	gpio_enableDigital(PORT_F, 1);
 
-	nvic_enable(PORTF_IRQ);
+//	nvic_enable(PORTF_IRQ);
 
 	//
 	//int i[2];

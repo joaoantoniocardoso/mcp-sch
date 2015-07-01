@@ -32,7 +32,7 @@ uint32 	task_id(void); 										// retorna o tid da tarefa atual
 void 	reschedule(void);
 void 	pauseScheduler(void);
 void 	resumeScheduler(void);
-//void    switch_context(**uint32 o_ctx, *uint32 n_ctx);
+void    switch_context(void ** o_ctx, void * n_ctx);
 task_t* busca (uint32 id);
 
 #endif
