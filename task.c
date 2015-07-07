@@ -3,39 +3,29 @@
 
 extern int main(void);
 uint8 num_tasks = 0;
-task_t * running;
-task_t* task_list[11]; //main + 10 tasks
+uint32 running;
+task_t task_list[11]; //main + 10 tasks
 
 //configuracao
 void task_init(void){
 	num_tasks = 0;
-	running = (task_t*) malloc(sizeof(task_t));
-	running->status = 1;//running
-	task_list[num_tasks] = running;
-	running->tid = num_tasks++;
-	running->t_next = running;
+	running = num_tasks;//num_tasks = 0
+	task_list[num_tasks].status = 1;//running
+	task_list[num_tasks].tid = num_tasks++;
+
+//////////////LEMBRAR DE TRABALHAR O CTX
+
 }
 
 //cria a tarefa e retorna o tid
 uint32 	task_create(void(*entry)(void*), void *args){
-	task_t *n_task;
-	n_task = (task_t*) malloc(sizeof(task_t));
-	n_task->task_ctx =  malloc(TASK_STACK_SIZE) + TASK_STACK_SIZE;
-	//n_task->task_ctx += TASK_STACK_SIZE;//Aponta para o inicio da pilha
-	n_task->task_ctx = args; //salva o endereco dos argumentos no r0
-	//n_task->task_ctx +=
-	n_task->task_ctx -=13*sizeof(uint32); //Aponta para o inicio da pilha mais o numero de registradores sem PC e SP
-	*((uint32*)n_task->task_ctx) = (uint32)entry; //salva entry no registrador LR da pilha
-
-	n_task->status = 0; //ready
-	n_task->tid = num_tasks;
-
-	n_task->t_next = running->t_next;
-	running->t_next = n_task;
-
-	task_list[num_tasks] = n_task;
+	task_list[num_tasks].end_ctx = &task_list[num_tasks].task_ctx[13];//Aponta para o inicio da pilha mais o numero de registradores sem PC e SP
+	task_list[num_tasks].task_ctx[0] = args;          //salva o endereco dos argumentos no r0 			
+	task_list[num_tasks].task_ctx[13] = (uint32)entry;//salva entry no registrador LR da pilha
+	task_list[num_tasks].status = 0; //ready
+	task_list[num_tasks].tid = num_tasks;
 	num_tasks++;
-	return n_task->tid;
+	return task_list[num_tasks].tid;
 }
 
 //suspende a propria tarefa que chama
@@ -61,10 +51,10 @@ void 	task_yield(void){
 
 void	task_pass(uint32 tid){
     task_t * n_task = task_list[tid];
-    switch_context(&running->task_ctx, n_task->task_ctx);
-    running->status = 0; //ready
-    running = n_task; //atualiza o ponteiro
-    running->status = 1; //running
+    switch_context(task_list[running].end_ctx, task_list[tid].end_ctx);
+    task_list[running].status = 0; //ready
+    running = tid; //atualiza o tid da running
+    task_list[running].status = 1; //running
 }
 
 //retorna o tid da tarefa atual
@@ -80,7 +70,7 @@ void	task_pass(uint32 tid){
 }*/
 
 uint32 task_id(void){
-	return running->tid;
+	return running;
 }
 
 ////busca uma task na lista
@@ -110,9 +100,37 @@ void 	resumeScheduler(void){
 
 __asm__(".global switch_context	\n"
 			"switch_context: \n"
-			"push {r0-r12,r14}\n"//move os registradores para a pilha
+			//"push {r0-r12,r14}\n"//move os registradores para a pilha
+			"push r0\n"
+			"push r1\n"
+			"push r2\n"
+			"push r3\n"
+			"push r4\n"
+			"push r5\n"
+			"push r6\n"
+			"push r7\n"
+			"push r8\n"
+			"push r9\n"
+			"push r10\n"
+			"push r11\n"
+			"push r12\n"
+			"push r14\n"
 			"str  sp, [r0]\n"
 			"mov  sp,r1\n"
-			"pop {r0-r12,r14}\n"//move os registradores da pilha
+			"pop r14\n"
+			"pop r12\n"
+			"pop r11\n"
+			"pop r10\n"
+			"pop r9\n"
+			"pop r8\n"
+			"pop r7\n"
+			"pop r6\n"
+			"pop r5\n"
+			"pop r4\n"
+			"pop r3\n"
+			"pop r2\n"
+			"pop r1\n"
+			"pop r0\n"
+			//"pop {r0-r12,r14}\n"//move os registradores da pilha
 			"mov  pc,lr"
 		);
