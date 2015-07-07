@@ -4,7 +4,7 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := C:/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3
+CG_TOOL_ROOT := C:/ti2/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3
 
 ORDERED_OBJS += \
 "./gpio.o" \
@@ -123,32 +123,32 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-mcp-sch.out \
+MCP22105_Final.out \
 
 EXE_OUTPUTS__QUOTED += \
-"mcp-sch.out" \
+"MCP22105_Final.out" \
 
 BIN_OUTPUTS += \
-mcp-sch.hex \
+MCP22105_Final.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"mcp-sch.hex" \
+"MCP22105_Final.hex" \
 
 
 # All Target
-all: mcp-sch.out
+all: MCP22105_Final.out
 
 # Tool invocations
-mcp-sch.out: $(OBJS) $(LDS_SRCS) $(GEN_CMDS)
+MCP22105_Final.out: $(OBJS) $(LDS_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GNU Linker'
-	"C:/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3/bin/arm-none-eabi-gcc.exe" -mthumb -DPART_LM3S6965 -ffunction-sections -fdata-sections -g -gdwarf-3 -gstrict-dwarf -Wall -Wl,-Map,"mcp-sch.map" -static -heap_size=11264 -o"mcp-sch.out" $(ORDERED_OBJS)
+	"C:/ti2/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3/bin/arm-none-eabi-gcc.exe" -mthumb -DPART_LM3S6965 -ffunction-sections -fdata-sections -g -gdwarf-3 -gstrict-dwarf -Wall -Wl,-Map,"MCP22105_Final.map" -static -o"MCP22105_Final.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-mcp-sch.hex: $(EXE_OUTPUTS)
+MCP22105_Final.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: GNU Objcopy Utility'
-	"C:/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3/bin/arm-none-eabi-objcopy.exe"  $(EXE_OUTPUTS__QUOTED) "mcp-sch.hex"
+	"C:/ti2/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3/bin/arm-none-eabi-objcopy.exe"  $(EXE_OUTPUTS__QUOTED) "MCP22105_Final.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
